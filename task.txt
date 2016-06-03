@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include <tchar.h>
+#include <iostream>
+using namespace std;
+
+int n;                                                              
+int* M;                                                            
+                                                                  
+void straight(int root)                                            
+{                                                              
+	cout << root << " ";                                        
+	                                                                
+	for (int i = 0; i < n; i++)
+		if (M[i] == root)
+			straight(i);
+}
+
+void back(int root)
+{
+	for (int i = 0; i < n; i++)
+		if (M[i] == root)
+			back(i);
+
+	cout << root << " ";
+}
+
+void symmetric(int root)
+{
+	int id = 0;
+	while ((M[id] != root) && (id < n))
+		id++;
+	if (id < n)
+		symmetric(id);
+
+	cout << root << " ";
+
+	if (id < n)
+		for (int i = id + 1; i < n; i++)
+			if (M[i] == root)
+				symmetric(i);
+}
+
+
+int main() {
+
+	cin >> n;    M = new int[n];
+	for (int i = 0; i < n; i++)
+		cin >> M[i];
+
+	int root = 0;
+	while (M[root] != -1)
+		root++;
+
+	straight(root);
+	cout << endl;
+
+	back(root);
+	cout << endl;
+
+	symmetric(root);
+	cout << endl;
+
+	delete[] M;
+
+	system("pause");
+	return 0;
+}
